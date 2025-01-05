@@ -14,7 +14,16 @@ public class DatabaseService {
 	@Autowired
 	MovieRepo movieRepo;
 	
+	@Autowired
+	RatingService ratingService;
+	
 	public void create(Movie movie) {
+		
+		String imdbRating = ratingService.getMovieRating(movie.getTitle());
+		
+		if(imdbRating != null) {
+			movie.setRating(Float.parseFloat(imdbRating));
+		}
 		movieRepo.save(movie);	
 	}
 	
